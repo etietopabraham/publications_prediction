@@ -57,7 +57,9 @@ list_of_files = [
     # Research directory for exploratory work
     "research/trials.ipynb",
     # Templates directory for any HTML templates
-    "templates/index.html"
+    "templates/index.html",
+    # Data Stored Locally
+    "data/"
 ]
 
 # Iterate through the list and create the folders and files
