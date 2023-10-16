@@ -2,6 +2,7 @@ from src.predicting_publications import logger
 from src.predicting_publications.pipeline.stage_01_data_ingestion import DataIngestionPipeline
 from src.predicting_publications.pipeline.stage_02_initial_data_validation import InitialDataValidationPipeline
 from src.predicting_publications.pipeline.stage_03_data_transformation import DataTransformationPipeline
+from src.predicting_publications.pipeline.stage_04_model_training import ModelTrainerPipeline
 
 def main():
     """
@@ -14,7 +15,8 @@ def main():
     # Define the list of pipeline stages to be executed in sequence
     execution_sequence = [DataIngestionPipeline(), 
                           InitialDataValidationPipeline(),
-                          DataTransformationPipeline()]
+                          DataTransformationPipeline(),
+                          ModelTrainerPipeline()]
 
     for pipeline in execution_sequence:
         try:

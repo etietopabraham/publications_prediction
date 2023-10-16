@@ -53,3 +53,42 @@ class DataTransformationConfig:
     root_dir: Path  # Directory for storing transformation results and related artifacts
     data_source_file: Path  # Path to the ingested data file for transformation
     data_validation: Path # Path to the validated output file
+
+
+@dataclass(frozen=True)
+class ModelTrainerConfig:
+    """
+    Configuration for the model training process.
+    
+    This configuration class captures the necessary paths, directories, 
+    and hyperparameters required for training the model.
+    
+    Attributes:
+    - root_dir: Directory for storing trained model and related artifacts.
+    - train_data_path: Path to the training data.
+    - test_data_path: Path to the testing/validation data.
+    - model_name: Name (or path) to save the trained model.
+    - target_column: The column name of the target variable.
+    - n_estimators: Number of boosting stages.
+    - max_depth: Maximum depth of the individual regression estimators.
+    - learning_rate: Step size for updating weights.
+    - subsample: Fraction of samples used for fitting individual base learners.
+    - random_state: Seed for reproducibility.
+    - max_features: The number of features to consider for best split.
+    - min_samples_split: Minimum number of samples required to split an internal node.
+    - min_samples_leaf: Minimum number of samples required at a leaf node.
+    """
+    
+    root_dir: Path  # Directory for storing model training results and related artifacts
+    train_data_path: Path  # Path to train data
+    test_data_path: Path  # Path to test data
+    model_name: str  # Name or path where the trained model should be saved
+    target_column: str  # The target column in the dataset
+    n_estimators: int  # Number of boosting stages
+    max_depth: int  # Maximum depth of the regression estimators
+    learning_rate: float  # Learning rate
+    random_state: int  # Seed for reproducibility
+    subsample: float  # Fraction of samples for fitting individual base learners
+    max_features: str  # Number of features to consider for best split
+    min_samples_split: int  # Min samples required to split an internal node
+    min_samples_leaf: int  # Min samples required at a leaf node

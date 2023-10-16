@@ -3,7 +3,8 @@ from predicting_publications.utils.common import read_yaml, create_directories
 from predicting_publications import logger
 from predicting_publications.entity.config_entity import (DataIngestionConfig, 
                                                           DataValidationConfig,
-                                                          DataTransformationConfig)
+                                                          DataTransformationConfig,
+                                                          ModelTrainerConfig)
 
 import os
 
@@ -163,3 +164,49 @@ class ConfigurationManager:
             logger.error("The 'data_transformation' attribute does not exist in the config file.")
             raise e
 
+
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        """
+        Extract and return model training configurations as a ModelTrainerConfig object.
+
+        This method fetches settings related to model training, like directories, file paths,
+        and hyperparameters, and returns them as a ModelTrainerConfig object.
+
+        Returns:
+        - ModelTrainerConfig: Object containing model training configuration settings.
+
+        Raises:
+        - AttributeError: If the necessary attributes do not exist in the config or params files.
+        """
+        try:
+            config = self.config.model_training
+            params = self.params.GradientBoostingRegressor
+            
+            # The feature schema is a dictionary, extracting the target column
+            target_col = self.feature_schema_filepath.get("target_column", "")
+
+
+            # Ensure the root directory for model training exists
+            create_directories([config.root_dir])
+
+            # Construct and return the ModelTrainerConfig object
+            return ModelTrainerConfig(
+                root_dir=Path(config.root_dir),
+                train_data_path=Path(config.train_data_path),
+                test_data_path=Path(config.test_data_path),
+                model_name=config.model_name,
+                target_column=target_col,
+                n_estimators=params.n_estimators,
+                max_depth=params.max_depth,
+                learning_rate=params.learning_rate,
+                random_state=params.random_state,
+                subsample=params.subsample,
+                max_features=params.max_features,
+                min_samples_split=params.min_samples_split,
+                min_samples_leaf=params.min_samples_leaf
+            )
+
+        except AttributeError as e:
+            # Log the error and re-raise the exception for handling by the caller
+            logger.error("An expected attribute does not exist in the config or params files.")
+            raise e

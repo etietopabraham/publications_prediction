@@ -1,1 +1,28 @@
-key: value
+GradientBoostingRegressor:
+  # Number of boosting stages to run. More might improve accuracy, but will also increase training time.
+  n_estimators: 190
+
+  # Maximum depth of the individual regression estimators. Helps in making the model more complex. 
+  # Avoid setting it too high, as it might overfit.
+  max_depth: 8
+
+  # Controls the step size in the wrong direction that each tree correction should make. 
+  # Smaller values might improve accuracy but will require more boosting stages.
+  learning_rate: 0.0895527640998049
+
+  # The fraction of samples used for fitting the individual base learners. 
+  # Values less than 1.0 can reduce variance and overfitting.
+  subsample: 0.5970487514167024
+
+  # A seed for reproducibility.
+  random_state: 42
+
+  # The number of features to consider when looking for the best split. 
+  # Using a smaller value can create more diverse trees, but might reduce accuracy.
+  max_features: None
+
+  # Minimum number of samples required to split an internal node. Can be used to control over-fitting.
+  min_samples_split: 19
+
+  # Minimum number of samples required to be at a leaf node. Can be used to control over-fitting.
+  min_samples_leaf: 3

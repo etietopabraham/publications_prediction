@@ -1,1 +1,54 @@
-key: value
+schema_type: "transformed"
+description: "Schema of the transformed data after feature engineering and aggregation."
+
+columns:
+  timestamp: 
+    type: datetime64[ns]
+    description: "Timestamp of the data entry."
+  lon: 
+    type: float64
+    description: "Longitude value."
+  lat: 
+    type: float64
+    description: "Latitude value."
+  hour:
+    type: int64
+    description: "Hour extracted from the timestamp."
+  day:
+    type: int64
+    description: "Day extracted from the timestamp."
+  dayofweek:
+    type: int64
+    description: "Day of the week extracted from the timestamp."
+  month:
+    type: int64
+    description: "Month extracted from the timestamp."
+  likescount: 
+    type: float64
+    description: "Mean count of likes for the aggregated period."
+  commentscount: 
+    type: float64
+    description: "Mean count of comments for the aggregated period."
+  symbols_cnt: 
+    type: float64
+    description: "Mean count of symbols for the aggregated period."
+  words_cnt: 
+    type: float64
+    description: "Mean count of words for the aggregated period."
+  hashtags_cnt: 
+    type: float64
+    description: "Mean count of hashtags for the aggregated period."
+  mentions_cnt: 
+    type: float64
+    description: "Mean count of mentions for the aggregated period."
+  links_cnt: 
+    type: float64
+    description: "Mean count of links for the aggregated period."
+  emoji_cnt: 
+    type: float64
+    description: "Mean count of emojis for the aggregated period."
+  publication_count:
+    type: int64
+    description: "Count of publications for the aggregated period."
+
+target_column: 'publication_count'
