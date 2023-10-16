@@ -3,6 +3,7 @@ from src.predicting_publications.pipeline.stage_01_data_ingestion import DataIng
 from src.predicting_publications.pipeline.stage_02_initial_data_validation import InitialDataValidationPipeline
 from src.predicting_publications.pipeline.stage_03_data_transformation import DataTransformationPipeline
 from src.predicting_publications.pipeline.stage_04_model_training import ModelTrainerPipeline
+from src.predicting_publications.pipeline.stage_05_model_evaluation import ModelEvaluationPipeline
 
 def main():
     """
@@ -16,7 +17,8 @@ def main():
     execution_sequence = [DataIngestionPipeline(), 
                           InitialDataValidationPipeline(),
                           DataTransformationPipeline(),
-                          ModelTrainerPipeline()]
+                          ModelTrainerPipeline(),
+                          ModelEvaluationPipeline()]
 
     for pipeline in execution_sequence:
         try:

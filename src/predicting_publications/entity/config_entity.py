@@ -92,3 +92,31 @@ class ModelTrainerConfig:
     max_features: str  # Number of features to consider for best split
     min_samples_split: int  # Min samples required to split an internal node
     min_samples_leaf: int  # Min samples required at a leaf node
+
+
+@dataclass(frozen=True)
+class ModelEvaluationConfig:
+    """
+    Data class for storing configuration related to model evaluation.
+
+    Attributes:
+    - root_dir: Root directory for saving model evaluation artifacts.
+    - test_data_path: Path to the test data used for evaluation.
+    - model_path: Path to the trained model saved during the training step.
+    - metric_file_name: Name (or path) to save the evaluation metrics.
+    - all_params: Dictionary containing other relevant parameters.
+    - target_column: Column name of the target variable in the dataset.
+    - mlflow_uri: URI for MLflow tracking server.
+
+    Note: The `frozen=True` argument makes instances of this class immutable, 
+    ensuring that once an instance is created, its attributes cannot be modified.
+    """
+
+    root_dir: Path          # Directory for saving model evaluation artifacts
+    test_data_path: Path    # Path to the test dataset
+    model_path: Path        # Path to the saved model
+    metric_file_name: str   # Filename to save evaluation metrics
+    all_params: dict        # Other relevant parameters for evaluation
+    target_column: str      # Name of the target column in the dataset
+    mlflow_uri: str         # URI for MLflow tracking
+

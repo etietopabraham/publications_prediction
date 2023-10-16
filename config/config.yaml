@@ -49,3 +49,24 @@ model_training:
 
   # Path to save our model
   model_name: model.joblib
+
+
+# Configuration for Model Evaluation
+
+model_evaluation:
+  # Root directory for saving model evaluation artifacts
+  root_dir: artifacts/model_evaluation
+  
+  # Path to the test data used for evaluation
+  test_data_path: artifacts/data_transformation/test_data.csv
+  
+  # Path to the trained model saved during the training step
+  model_path: artifacts/model_trainer/model.joblib
+  
+  # Path to save the evaluation metrics in JSON format
+  metric_file_name: artifacts/model_evaluation/metrics.json
+
+  # MLFlow URI
+  mlflow_uri: 'https://dagshub.com/etietopabraham/publications_prediction.mlflow'
+
+
