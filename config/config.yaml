@@ -22,3 +22,15 @@ data_validation:
   
   # Path to the file that captures the validation status (e.g., success, errors encountered)
   status_file: artifacts/initial_data_validation/status.txt
+
+
+# Configuration related to data transformation
+data_transformation:
+  # Directory where data transformation results and artifacts are stored
+  root_dir: artifacts/data_transformation
+  
+  # Path to the ingested data file that will be used for validation
+  data_source_file: artifacts/data_ingestion/train_data.csv
+
+  # Path to data validation status
+  data_validation: artifacts/initial_data_validation/status.txt

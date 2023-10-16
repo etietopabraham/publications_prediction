@@ -2,7 +2,8 @@ from predicting_publications.constants import *
 from predicting_publications.utils.common import read_yaml, create_directories
 from predicting_publications import logger
 from predicting_publications.entity.config_entity import (DataIngestionConfig, 
-                                                          DataValidationConfig)
+                                                          DataValidationConfig,
+                                                          DataTransformationConfig)
 
 import os
 
@@ -113,8 +114,6 @@ class ConfigurationManager:
             # Extract schema for data validation
             schema = self.schema.columns
             
-            # # Ensure the status directory for data validation exists
-            # create_directories([config.status_file])
             # Ensure the parent directory for the status file exists
             create_directories([os.path.dirname(config.status_file)])
 
@@ -130,5 +129,37 @@ class ConfigurationManager:
         except AttributeError as e:
             # Log the error and re-raise the exception for handling by the caller
             logger.error("The 'data_validation' attribute does not exist in the config file.")
+            raise e
+
+
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        """
+        Extract and return data transformation configurations as a DataTransformationConfig object.
+
+        This method fetches settings related to data transformation, like directories and file paths,
+        and returns them as a DataTransformationConfig object.
+
+        Returns:
+        - DataTransformationConfig: Object containing data transformation configuration settings.
+
+        Raises:
+        - AttributeError: If the 'data_transformation' attribute does not exist in the config file.
+        """
+        try:
+            config = self.config.data_transformation
+            
+            # Ensure the root directory for data transformation exists
+            create_directories([config.root_dir])
+
+            # Construct and return the DataTransformationConfig object
+            return DataTransformationConfig(
+                root_dir=Path(config.root_dir),
+                data_source_file=Path(config.data_source_file),
+                data_validation=Path(config.data_validation),
+            )
+
+        except AttributeError as e:
+            # Log the error and re-raise the exception for handling by the caller
+            logger.error("The 'data_transformation' attribute does not exist in the config file.")
             raise e
 
