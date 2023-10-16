@@ -1,7 +1,10 @@
 from predicting_publications.constants import *
 from predicting_publications.utils.common import read_yaml, create_directories
 from predicting_publications import logger
-from predicting_publications.entity.config_entity import DataIngestionConfig
+from predicting_publications.entity.config_entity import (DataIngestionConfig, 
+                                                          DataValidationConfig)
+
+import os
 
 class ConfigurationManager:
     """
@@ -20,7 +23,8 @@ class ConfigurationManager:
     def __init__(self, 
                  config_filepath = CONFIG_FILE_PATH, 
                  params_filepath = PARAMS_FILE_PATH, 
-                 schema_filepath = SCHEMA_FILE_PATH) -> None:
+                 schema_filepath = SCHEMA_FILE_PATH,
+                 feature_schema_filepath = FEATURE_SCHEMA_FILE_PATH) -> None:
         """
         Initialize ConfigurationManager with configurations, parameters, and schema.
 
@@ -34,7 +38,8 @@ class ConfigurationManager:
         """
         self.config = self._read_config_file(config_filepath, "config")
         self.params = self._read_config_file(params_filepath, "params")
-        self.schema = self._read_config_file(schema_filepath, "schema")
+        self.schema = self._read_config_file(schema_filepath, "initial_schema")
+        self.feature_schema_filepath = self._read_config_file(feature_schema_filepath, "feature_engineered_schema")
 
         # Create the directory for storing artifacts if it doesn't exist
         create_directories([self.config.artifacts_root])
@@ -58,6 +63,7 @@ class ConfigurationManager:
         except Exception as e:
             logger.error(f"Error reading {config_name} file: {filepath}. Error: {e}")
             raise
+    
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
         """
@@ -85,3 +91,44 @@ class ConfigurationManager:
         except AttributeError as e:
             logger.error("The 'data_ingestion' attribute does not exist in the config file.")
             raise e
+        
+
+    def get_data_validation_config(self) -> DataValidationConfig:
+        """
+        Extract and return data validation configurations as a DataValidationConfig object.
+
+        This method fetches settings related to data validation, like directories, file paths,
+        and schema, and returns them as a DataValidationConfig object.
+
+        Returns:
+        - DataValidationConfig: Object containing data validation configuration settings.
+
+        Raises:
+        - AttributeError: If the 'data_validation' attribute does not exist in the config file.
+        """
+        try:
+            # Extract data validation configurations
+            config = self.config.data_validation
+            
+            # Extract schema for data validation
+            schema = self.schema.columns
+            
+            # # Ensure the status directory for data validation exists
+            # create_directories([config.status_file])
+            # Ensure the parent directory for the status file exists
+            create_directories([os.path.dirname(config.status_file)])
+
+            
+            # Construct and return the DataValidationConfig object
+            return DataValidationConfig(
+                root_dir=Path(config.root_dir),
+                data_source_file=Path(config.data_source_file),
+                status_file=Path(config.status_file),
+                initial_schema=schema
+            )
+
+        except AttributeError as e:
+            # Log the error and re-raise the exception for handling by the caller
+            logger.error("The 'data_validation' attribute does not exist in the config file.")
+            raise e
+

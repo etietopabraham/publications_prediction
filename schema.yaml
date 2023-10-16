@@ -1,1 +1,40 @@
-key: value
+schema_type: "initial"
+description: "Schema of the initial data before feature engineering."
+
+columns:
+  timestamp: 
+    type: int64
+    description: "Timestamp of the data entry."
+  lon: 
+    type: float64
+    description: "Longitude value."
+  lat: 
+    type: float64
+    description: "Latitude value."
+  likescount: 
+    type: int64
+    description: "Count of likes."
+  commentscount: 
+    type: int64
+    description: "Count of comments."
+  symbols_cnt: 
+    type: int64
+    description: "Count of symbols."
+  words_cnt: 
+    type: int64
+    description: "Count of words."
+  hashtags_cnt: 
+    type: int64
+    description: "Count of hashtags."
+  mentions_cnt: 
+    type: int64
+    description: "Count of mentions."
+  links_cnt: 
+    type: int64
+    description: "Count of links."
+  emoji_cnt: 
+    type: int64
+    description: "Count of emojis."
+  point: 
+    type: object
+    description: "Geographical point object."
