@@ -47,8 +47,5 @@ columns:
   emoji_cnt: 
     type: float64
     description: "Mean count of emojis for the aggregated period."
-  publication_count:
-    type: int64
-    description: "Count of publications for the aggregated period."
 
 target_column: 'publication_count'
